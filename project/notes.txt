@@ -1,0 +1,7 @@
+Zoom level 17 for localization seems pretty good
+will have to find a way to check local buildings
+  -define ~10 mile radius?
+will have to find a way to define local buildings
+will have to call and keep counts from db
+  -check radius then draw buildings?
+    - remember async command to help loading

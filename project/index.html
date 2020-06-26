@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Whater This App Will Be Called</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+
+  <p id="location"></p>
+  <p id="p1"></p>
+
+ <!-- map initialization
+ <script>
+   function initMap() {
+    var uluru = {lat: -25.344, lng: 131.036};
+    var map = new google.maps.Map(
+     document.getElementById('map'), {zoom:4, center:uluru});
+
+    var marker = new google.maps.Marker({position: uluru, map: map});
+  }
+  </script>
+  //-->
+
+  <!-- POLYGON TESTING
+  <script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 5,
+        center: {lat: 24.886, lng: -70.268},
+
+      });
+
+
+    var triangleCoords = [
+      {lat: 25.774, lng: -80.190 },
+      {lat: 18.466, lng: -66.118 },
+      {lat: 32.321, lng: -64.757 },
+      {lat: 25.774, lng: -80.190 }
+    ];
+
+    var bermudaTriangle = new google.maps.Polygon({
+      paths: triangleCoords,
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35
+    });
+
+    bermudaTriangle.setMap(map);
+  }
+  </script>
+  //-->
+
+  <!-- LOCALIZATION TEST -->
+  <script>
+    var map, infoWindow;
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.497, lng: 150.644},
+        zoom: 17
+      });
+
+      infoWindow = new google.maps.InfoWindow;
+
+      //try geolocation
+      if( navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+          document.getElementById("location").innerHTML = "Current Location:<br>" + pos.lat + "<br>" + pos.lng;
+        }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      handleLocationError(false,infoWindow,map.getCenter());
+      }
+
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWundow.setContent( browserHasGeolocation ?
+          'Error: The Geolocation service failed.' :
+          'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);
+      }
+
+      //modifies dom to include latitude and longitude
+      google.maps.event.addListener(map, 'mousemove', function(event) {
+        document.getElementById("p1").innerHTML = displayCoordinates(event.latLng);
+      });
+
+      function displayCoordinates(pnt) {
+        var lat = pnt.lat();
+        lat = lat.toFixed(4);
+        var lng = pnt.lng();
+        lnt = lng.toFixed(4);
+        return "<strong>Latitude:</strong> " + lat + "<br><strong>Longitude:</strong> " + lng;
+      }
+
+      google.maps.event.addListener(map, 'click', function(event) {
+       addMarker(event.latLng);
+     });
+
+      function addMarker(pnt) {
+        var marker = new google.maps.Marker({position: pnt, map:map});
+      }
+
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYzW_RXkiwNh9FHqBGIUOn_P1Vh7yBjS4&callback=initMap"
+  type="text/javascript"></script>
+
+    </body>
+</html>
