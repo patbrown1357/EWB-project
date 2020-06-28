@@ -16,6 +16,7 @@
 
   <p id="location"></p>
   <p id="p1"></p>
+  <p id="bounds"></p>
 
  <!-- map initialization
  <script>
@@ -63,6 +64,8 @@
   <!-- LOCALIZATION TEST -->
   <script>
     var map, infoWindow;
+    var bounds = new Array();
+    var shapes = [];
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -34.497, lng: 150.644},
@@ -113,17 +116,53 @@
         return "<strong>Latitude:</strong> " + lat + "<br><strong>Longitude:</strong> " + lng;
       }
 
+    //dom add marker on click currently
       google.maps.event.addListener(map, 'click', function(event) {
-       addMarker(event.latLng);
+        console.log("markers work");
+        onLeftClick(event.latLng);
      });
 
-      function addMarker(pnt) {
-        var marker = new google.maps.Marker({position: pnt, map:map});
+     document.addEventListener("keypress", function(event) {
+       if (event.keyCode == 13) {
+         console.log("enter works");
+         checkEnd(bounds);
+         bounds = new Array();
+       }
+     });
+
+     // google.maps.event.addListener(map, 'keypress', function(event) {
+     //   console.log("atleast this works");
+     //   if(event.which == 13) {
+     //     console.log("this works");
+     //    checkEnd(bounds);
+     //    bounds = [{}];
+     //  }
+     // });
+
+      function onLeftClick(pnt) {
+          //var marker = new google.maps.Marker({position:pnt, map:map});
+          bounds.push({lat:pnt.lat(), lng:pnt.lng()});
+          document.getElementById('bounds').innerHTML = bounds;
       }
 
+      function checkEnd(perim) {
+        var shape = new google.maps.Polygon({
+          paths: perim,
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35
+        });
+        shape.setMap(map);
+        shapes.push(shape);
+      }
+
+
     }
+
   </script>
-  <script async defer src="APIKEYHERE"
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYzW_RXkiwNh9FHqBGIUOn_P1Vh7yBjS4&callback=initMap"
   type="text/javascript"></script>
 
     </body>
