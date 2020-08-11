@@ -1,169 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #map {
-        width: 100%;
-        height: 400px;
-        background-color: grey;
-      }
-    </style>
+    <link rel ="stylesheet" type="text/css" href="CSS/style.css">
+    <script async src="./scripts/require.js"></script>
+    <script async src="./scripts/main.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYzW_RXkiwNh9FHqBGIUOn_P1Vh7yBjS4&callback=initMap"
+    type="text/javascript"></script>
   </head>
-  <body>
-    <h3>Whater This App Will Be Called</h3>
+  <body id="page" onload="initMap()">
+    <div id="header">
+      <h3>Whatever This App Will Be Called</h3>
+    </div>
     <!--The div element for the map -->
     <div id="map"></div>
+    <div id="info">
+      <p id="location"></p>
+      <p id="p1"></p>
+      <p id="bounds"></p>
+      <h2> Instructions <br></h2>
+      <p> 1: Left-Click to set a point <br>points will automatically be grouped<br>
+          2: Press Enter to create the shape
+      <p>
+    </div>
+    <button type='button' onclick ="saveToFile()">Save</button>
+    <button type='button' onclick="readFile()">Read File</button>
+    <p id='readFile'><p>
 
-  <p id="location"></p>
-  <p id="p1"></p>
-  <p id="bounds"></p>
-
- <!-- map initialization
- <script>
-   function initMap() {
-    var uluru = {lat: -25.344, lng: 131.036};
-    var map = new google.maps.Map(
-     document.getElementById('map'), {zoom:4, center:uluru});
-
-    var marker = new google.maps.Marker({position: uluru, map: map});
-  }
-  </script>
-  //-->
-
-  <!-- POLYGON TESTING
-  <script>
-    function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 5,
-        center: {lat: 24.886, lng: -70.268},
-
-      });
-
-
-    var triangleCoords = [
-      {lat: 25.774, lng: -80.190 },
-      {lat: 18.466, lng: -66.118 },
-      {lat: 32.321, lng: -64.757 },
-      {lat: 25.774, lng: -80.190 }
-    ];
-
-    var bermudaTriangle = new google.maps.Polygon({
-      paths: triangleCoords,
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35
-    });
-
-    bermudaTriangle.setMap(map);
-  }
-  </script>
-  //-->
-
-  <!-- LOCALIZATION TEST -->
-  <script>
-    var map, infoWindow;
-    var bounds = new Array();
-    var shapes = [];
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.497, lng: 150.644},
-        zoom: 17
-      });
-
-      infoWindow = new google.maps.InfoWindow;
-
-      //try geolocation
-      if( navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position){
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found.');
-          infoWindow.open(map);
-          map.setCenter(pos);
-          document.getElementById("location").innerHTML = "Current Location:<br>" + pos.lat + "<br>" + pos.lng;
-        }, function() {
-          handleLocationError(true, infoWindow, map.getCenter());
-      });
-    } else {
-      handleLocationError(false,infoWindow,map.getCenter());
-      }
-
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWundow.setContent( browserHasGeolocation ?
-          'Error: The Geolocation service failed.' :
-          'Error: Your browser doesn\'t support geolocation.');
-          infoWindow.open(map);
-      }
-
-      //modifies dom to include latitude and longitude
-      google.maps.event.addListener(map, 'mousemove', function(event) {
-        document.getElementById("p1").innerHTML = displayCoordinates(event.latLng);
-      });
-
-      function displayCoordinates(pnt) {
-        var lat = pnt.lat();
-        lat = lat.toFixed(4);
-        var lng = pnt.lng();
-        lnt = lng.toFixed(4);
-        return "<strong>Latitude:</strong> " + lat + "<br><strong>Longitude:</strong> " + lng;
-      }
-
-    //dom add marker on click currently
-      google.maps.event.addListener(map, 'click', function(event) {
-        console.log("markers work");
-        onLeftClick(event.latLng);
-     });
-
-     document.addEventListener("keypress", function(event) {
-       if (event.keyCode == 13) {
-         console.log("enter works");
-         checkEnd(bounds);
-         bounds = new Array();
-       }
-     });
-
-     // google.maps.event.addListener(map, 'keypress', function(event) {
-     //   console.log("atleast this works");
-     //   if(event.which == 13) {
-     //     console.log("this works");
-     //    checkEnd(bounds);
-     //    bounds = [{}];
-     //  }
-     // });
-
-      function onLeftClick(pnt) {
-          //var marker = new google.maps.Marker({position:pnt, map:map});
-          bounds.push({lat:pnt.lat(), lng:pnt.lng()});
-          document.getElementById('bounds').innerHTML = bounds;
-      }
-
-      function checkEnd(perim) {
-        var shape = new google.maps.Polygon({
-          paths: perim,
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35
-        });
-        shape.setMap(map);
-        shapes.push(shape);
-      }
-
-
-    }
-
-  </script>
-  <script async defer src="APIKEYHERE"
-  type="text/javascript"></script>
-
-    </body>
+  </body>
 </html>
