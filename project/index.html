@@ -4,7 +4,7 @@
     <link rel ="stylesheet" type="text/css" href="CSS/style.css">
     <script async src="./scripts/require.js"></script>
     <script async src="./scripts/main.js"></script>
-    <script async defer src="key here"
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYzW_RXkiwNh9FHqBGIUOn_P1Vh7yBjS4&callback=initMap&libraries=places"
     type="text/javascript"></script>
   </head>
   <body id="page" onload="initMap()">
@@ -12,7 +12,21 @@
       <h3>Whatever This App Will Be Called</h3>
     </div>
     <!--The div element for the map -->
+    <div style="display: none">
+      <input
+        id="pac-input"
+        class="controls"
+        type="text"
+        placeholder="Enter a location"
+        />
+      </div>
     <div id="map"></div>
+    <div id="infowindow-content">
+     <span id="place-name" class="title"></span><br />
+     <strong>Place ID:</strong> <span id="place-id"></span><br />
+     <span id="place-address"></span>
+    </div>
+
     <div id="info">
       <p id="location"></p>
       <p id="p1"></p>
