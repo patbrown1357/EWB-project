@@ -64,20 +64,20 @@
 
     autocomplete.addListener("place_changed", () => {
       infowindow.close();
-    const place = autocomplete.getPlace();
+      const place = autocomplete.getPlace();
 
-    if(!place.geometry) {
-      return;
-    }
+      if(!place.geometry) {
+        return;
+      }
 
-    if( place.geometry.viewport) {
-      map.fitBounds(place.geometry.viewport);
-    } else {
-      map.seCenter(place.geometry.location);
-      map.setZoom(17);
-    }
+      if( place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.seCenter(place.geometry.location);
+        map.setZoom(17);
+      }
 
-    //set the position of hte marker using hte place id and Location
+      //set the position of hte marker using hte place id and Location
       marker.setPlace({
         placeId: place.place_id,
         location: place.geometry.location
@@ -152,12 +152,3 @@ function checkEnd(perim) {
   shapes.push(shape);
   document.getElementById('bounds').innerHTML = "";
 }
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://gmapjs:*Pw8C18EC@gmapjs-test.vqhbv.mongodb.net/<dbname>?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
