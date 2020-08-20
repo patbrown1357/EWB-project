@@ -18,14 +18,14 @@ async function main() {
   }
 }
 
-async function listDatabases(client) {
+function listDatabases(client) {
   databasesList = await client.db().admin().listDatabases();
 
   console.log("Databases:");
   databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 }
 
-async function upCount(client, placeId) {
+function upCount(client, placeId) {
 
   const cursor = client.db("Locations").collection("gmap_test").find({placeId:placeId}).limit(1);
 
@@ -34,10 +34,15 @@ async function upCount(client, placeId) {
       {placeId:placeId},
       {$set: {count:(cursor.count+1)}
     });
+  } else {
+    collection.save({
+      placeId: placeId,
+      count: 1
+    })
   }
 }
 
-async function decCount(client, placeId) {
+function decCount(client, placeId) {
   onst cursor = client.db("Locations").collection("gmap_test").find({placeId:placeId}).limit(1);
 
   if( cursor.count() > 0 ) {

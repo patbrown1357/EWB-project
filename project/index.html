@@ -4,14 +4,15 @@
     <link rel ="stylesheet" type="text/css" href="CSS/style.css">
     <script async src="./scripts/require.js"></script>
     <script async src="./scripts/main.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYzW_RXkiwNh9FHqBGIUOn_P1Vh7yBjS4&callback=initMap&libraries=places"
+    <script async src="./scripts/database.js"></script>
+    <script async defer src=""
     type="text/javascript"></script>
   </head>
   <body id="page" onload="initMap()">
     <div id="header">
       <h3>Whatever This App Will Be Called</h3>
     </div>
-    <!--The div element for the map -->
+    <!--The autocomplete search bar -->
     <div style="display: none">
       <input
         id="pac-input"
@@ -20,6 +21,7 @@
         placeholder="Enter a location"
         />
       </div>
+    <!--The div element for the map -->
     <div id="map"></div>
     <div id="infowindow-content">
      <span id="place-name" class="title"></span><br />
@@ -27,6 +29,7 @@
      <span id="place-address"></span>
     </div>
 
+<!-- area below the map -->
     <div id="info">
       <p id="location"></p>
       <p id="p1"></p>
