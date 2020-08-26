@@ -1,28 +1,29 @@
-async function main() {
-  const MongoClient = require('mongodb').MongoClient;
-  const uri = "";
+import {'require'} from './scripts/require.js';
+var MongoClient = require('mongodb').MongoClient;
+
+async function connectDb() {
+
+
+  const uri = "mongodb+srv://gmapjs:*Pw8C18EC@gmapjs-test.vqhbv.mongodb.net/<dbname>?retryWrites=true&w=majority";
   const client = new MongoClient(uri, { useUnifiedTopology: true });
 
   try {
     await client.connect();
     await listDatabases(client);
-    client.db("Locations").collection("gmap_test").insertOne({
-      item: "test",
-      coords: "here",
-      capacity: 128
-    });
+
   } catch(e) {
     console.error(e);
   } finally {
-    await client.close()
+    await client.close();
   }
 }
 
-function listDatabases(client) {
+async function listDatabases(client) {
   databasesList = await client.db().admin().listDatabases();
 
   console.log("Databases:");
   databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+  databasesList.databases.forEach(db => document.getElementById("db").innerHTML += ` - ${db.name}` + "\n");
 }
 
 function upCount(client, placeId) {
@@ -43,7 +44,7 @@ function upCount(client, placeId) {
 }
 
 function decCount(client, placeId) {
-  onst cursor = client.db("Locations").collection("gmap_test").find({placeId:placeId}).limit(1);
+  const cursor = client.db("Locations").collection("gmap_test").find({placeId:placeId}).limit(1);
 
   if( cursor.count() > 0 ) {
     collection.update(
@@ -52,6 +53,3 @@ function decCount(client, placeId) {
     });
   }
 }
-
-
-main().catch(console.error);
